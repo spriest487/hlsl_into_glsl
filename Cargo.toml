@@ -1,0 +1,13 @@
+[package]
+name = "hlsl_into_glsl"
+version = "0.1.0"
+authors = ["spriest487 <spriest487@googlemail.com>"]
+
+[dependencies]
+spirv_cross = { git = "https://github.com/spriest487/spirv_cross.git", branch = "get_base_type" }
+shaderc = "0.3.6"
+log = "0.4.1"
+
+[dev-dependencies]
+tempfile = "3.0.1"
+regex = "0.2.5"
