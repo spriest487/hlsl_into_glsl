@@ -8,10 +8,16 @@ use spirv_cross;
 
 #[derive(Debug)]
 pub enum Error {
+    /// An error occured reading a source file.
     Io(io::Error),
+
+    /// The native library could not be initialized.
     InitFailed,
-    InvalidInput,
+
+    /// An error occured during GLSL generation.
     CompilationFailed(String),
+
+    /// The HLSL source failed to parse.
     ParseFailed(String),
 }
 
@@ -22,8 +28,6 @@ impl fmt::Display for Error {
                 write!(f, "{}", err),
             &Error::InitFailed =>
                 write!(f, "shader compiler initialization failed"),
-            &Error::InvalidInput =>
-                write!(f, "invalid type of source shader provided to shader compiler"),
             &Error::CompilationFailed(ref msg) |
             &Error::ParseFailed(ref msg) =>
                 f.write_str(msg),

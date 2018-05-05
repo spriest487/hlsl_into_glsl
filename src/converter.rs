@@ -20,7 +20,15 @@ use error::Error;
 
 #[derive(Debug, Clone)]
 pub struct ConverterOptions {
+    /// Additional directories to search in when resolving `#include` statements.
+    ///
+    /// The path to the file being converted is always implicity used as a search path, taking
+    /// priority over any paths listed here.
+    ///
+    /// Next, the paths listed here are tried in order.
     pub include_search_paths: Vec<PathBuf>,
+
+    /// Macros to `#define` during compilation. Use `None` to define the macro without a value.
     pub macros: HashMap<String, Option<String>>,
 
     pub target_version: GlslVersion,
@@ -87,11 +95,20 @@ impl Converter {
         })
     }
 
-    pub fn convert<P>(&mut self,
-                      source_path: P,
-                      stage: Stage,
-                      entry_point: &str,
-                      options: &ConverterOptions) -> Result<ConvertedShader, Error>
+    /// Convert a HLSL file to GLSL.
+    ///
+    /// # Arguments
+    ///
+    /// * `source_path` - Location of HLSL source file.
+    /// * `stage` - Type of GLSL shader to create.
+    /// * `entry_point` - Name of function to use as entry point for this stage in the HLSL source.
+    /// * `options` - Converter configuration.
+    pub fn convert<P>(
+        &mut self,
+        source_path: P,
+        stage: Stage,
+        entry_point: &str,
+        options: &ConverterOptions) -> Result<ConvertedShader, Error>
         where P: Into<PathBuf>
     {
         let source_path = source_path.into();

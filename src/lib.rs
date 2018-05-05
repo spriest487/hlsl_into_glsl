@@ -35,7 +35,11 @@ pub enum Stage {
 
 #[derive(Clone, Debug)]
 pub struct ConvertedShader {
+    /// Converted shader source code.
     pub shader: String,
+
+    /// Compiled uniform names, mapped to variable names.
+    /// May be missing uniforms that were removed as unused.
     pub uniforms: HashMap<String, String>,
 }
 
