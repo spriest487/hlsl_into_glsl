@@ -43,7 +43,7 @@ fn get_ubo_member_mappings(shader: &ConvertedShader) -> HashMap<String, String> 
     // the form is `_something.(the name)`
     let field_pattern = Regex::new(r"^\w+\.(.+)$").unwrap();
 
-    shader.properties.iter()
+    shader.uniforms.iter()
         .map(|(compiled_name, mapped_name)| {
             let field_captures = field_pattern.captures(compiled_name)
                 .expect("ubo field mattern must patch");

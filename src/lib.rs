@@ -36,6 +36,6 @@ pub enum Stage {
 #[derive(Clone, Debug)]
 pub struct ConvertedShader {
     shader: String,
-    properties: HashMap<String, String>,
+    uniforms: HashMap<String, String>,
 }
 

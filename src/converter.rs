@@ -116,13 +116,12 @@ impl Converter {
             },
         })?;
 
-        let output = ast.compile()?;
-
-        let properties = find_property_mappings(&ast)?;
+        let shader = ast.compile()?;
+        let uniforms = find_uniform_mappings(&ast)?;
 
         Ok(ConvertedShader {
-            shader: output,
-            properties,
+            shader,
+            uniforms,
         })
     }
 
@@ -165,8 +164,8 @@ impl Converter {
     }
 }
 
-fn find_property_mappings(ast: &spirv::Ast<glsl::Target>)
-                          -> Result<HashMap<String, String>, Error> {
+fn find_uniform_mappings(ast: &spirv::Ast<glsl::Target>)
+                         -> Result<HashMap<String, String>, Error> {
     let shader_resources = ast.get_shader_resources()?;
 
     let mut mappings = HashMap::new();
